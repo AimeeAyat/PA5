@@ -234,11 +234,9 @@ class RewardModelTrainer:
             save_steps=save_steps,
             eval_steps=eval_steps,
             logging_steps=logging_steps,
-            eval_strategy="steps",
-            save_strategy="steps",
-            load_best_model_at_end=True,
-            metric_for_best_model="accuracy",
-            greater_is_better=True,
+            eval_strategy="no",  # Disable intermediate eval to save time
+            save_strategy="no",  # Save only at end
+            load_best_model_at_end=False,
             bf16=True,  # BF16 for better compatibility (avoids FP16 gradient unscaling)
             fp16=False,  # Avoid FP16 unscaling issues
             remove_unused_columns=True,

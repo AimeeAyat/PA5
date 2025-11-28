@@ -588,11 +588,9 @@ class PPOAlignmentTrainer:
             metrics_history.append(epoch_metrics)
             logger.info(f"Epoch {epoch + 1} metrics: {epoch_metrics}")
 
-            # Save checkpoint
-            save_frequency = max(1, save_steps // 1000) if save_steps >= 1000 else 1
-            if (epoch + 1) % save_frequency == 0 or epoch == num_train_epochs - 1:
-                save_dir = f"{self.output_dir}/checkpoint-epoch-{epoch+1}"
-                self.save_model(save_dir)
+        # Save model only at the end
+        logger.info("Saving final PPO model...")
+        self.save_model(self.output_dir)
 
         self.training_history = {
             "metrics": metrics_history,
