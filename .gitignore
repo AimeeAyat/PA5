@@ -37,8 +37,9 @@ wheels/
 *~
 .DS_Store
 
-# Results and logs
-results/
+# Results and logs (tracked - push after training)
+# results/  # KEEP - commit after training
+# visualizations/  # KEEP - commit after training
 logs/
 *.log
 training.log
