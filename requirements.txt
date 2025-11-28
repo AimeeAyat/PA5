@@ -1,0 +1,41 @@
+# Task 2: LLM Alignment - Python Dependencies
+# Optimized for RTX 5090 on Windows 11
+
+# Core ML Framework
+torch==2.1.1
+torchvision==0.16.1
+torchaudio==0.16.1
+
+# Transformers & LLM Libraries
+transformers>=4.38.0  # Updated to support EncoderDecoderCache for peft
+peft>=0.10.0  # LoRA adapters - updated for compatibility
+trl>=0.8.0  # TRL training libraries (DPO, PPO, GRPO trainers)
+datasets>=2.18.0
+
+# Quantization Support
+bitsandbytes==0.41.2  # 8-bit quantization
+
+# Data & Processing
+numpy==1.24.3
+pandas==2.1.1
+scipy==1.11.4
+
+# Visualization
+matplotlib==3.8.2
+seaborn==0.13.0
+plotly==5.18.0
+
+# Utilities
+tqdm==4.66.1
+pyyaml==6.0.1
+requests==2.31.0
+python-dotenv==1.0.0
+
+# Development & Testing (Optional)
+jupyter==1.0.0
+ipython==8.17.2
+black==23.11.0
+flake8==6.1.0
+
+# Device Management
+nvtx==2.5.0  # NVIDIA Tools Extension (optional, for profiling)
