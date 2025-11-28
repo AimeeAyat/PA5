@@ -1,20 +1,20 @@
 """
 Configuration for Task 2: LLM Alignment
-Optimized for RTX 5090 on Windows 11
+Optimized for Colab A100 (40GB VRAM)
 """
 
 from dataclasses import dataclass, field
 from typing import Optional
 
 # ============================================================================
-# HARDWARE CONFIGURATION (RTX 5090)
+# HARDWARE CONFIGURATION (Colab A100 - 40GB VRAM)
 # ============================================================================
 DEVICE = "cuda"
 DEVICE_MAP = "auto"
-MAX_MEMORY = {0: "22GB"}  # RTX 5090 has 32GB, reserve some for OS
-TORCH_DTYPE = "float16"
-LOAD_IN_8BIT = True  # Use 8-bit quantization to reduce memory
-LOAD_IN_4BIT = False  # Not needed with 8-bit
+MAX_MEMORY = {0: "30GB"}  # A100 has 40GB, reserve some for OS
+TORCH_DTYPE = "bfloat16"  # BF16 for better stability
+LOAD_IN_8BIT = False  # Disabled - A100 has enough VRAM
+LOAD_IN_4BIT = False  # Not needed
 
 # ============================================================================
 # MODEL CONFIGURATION
@@ -48,8 +48,8 @@ LORA_BIAS = "none"
 class DPOConfig:
     """DPO Training Configuration"""
     num_train_epochs: int = 3
-    per_device_train_batch_size: int = 8
-    per_device_eval_batch_size: int = 16
+    per_device_train_batch_size: int = 16  # Increased for A100 (40GB VRAM)
+    per_device_eval_batch_size: int = 32  # Increased for A100
     gradient_accumulation_steps: int = 2
     learning_rate: float = 5e-4
     beta: float = 0.1  # DPO temperature
@@ -80,15 +80,15 @@ class PPORewardModelConfig:
     output_dir: str = "checkpoints/reward_model"
     gradient_checkpointing: bool = True
     optim: str = "paged_adamw_32bit"
-    load_in_8bit: bool = False  # Disabled - RTX 5090 has enough VRAM
+    load_in_8bit: bool = False  # Disabled - A100 has enough VRAM
 
 
 @dataclass
 class PPOConfig:
     """PPO Training Configuration"""
     num_ppo_epochs: int = 4
-    per_device_train_batch_size: int = 4  # Increased for A100
-    per_device_eval_batch_size: int = 8
+    per_device_train_batch_size: int = 8  # Increased for A100 (40GB VRAM)
+    per_device_eval_batch_size: int = 16  # Increased for A100
     gradient_accumulation_steps: int = 4
     learning_rate: float = 1e-5
     value_learning_rate: float = 1e-5
@@ -115,8 +115,8 @@ class PPOConfig:
 class GRPOConfig:
     """GRPO Training Configuration"""
     num_train_epochs: int = 3
-    per_device_train_batch_size: int = 4  # Increased for A100
-    per_device_eval_batch_size: int = 8
+    per_device_train_batch_size: int = 8  # Increased for A100 (40GB VRAM)
+    per_device_eval_batch_size: int = 16  # Increased for A100
     gradient_accumulation_steps: int = 4
     learning_rate: float = 5e-5
     group_size: int = 4  # Increased for A100 - number of responses per prompt
