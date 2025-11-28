@@ -71,8 +71,8 @@ class PPORewardModelConfig:
     model_id: str = "OpenAssistant/reward-model-deberta-v3-large"
     use_pretrained: bool = False  # Train on ORCA preference data by default
     num_train_epochs: int = 2  # 2 epochs for fine-tuning large model
-    per_device_train_batch_size: int = 8  # Smaller batch for large model
-    per_device_eval_batch_size: int = 16
+    per_device_train_batch_size: int = 24  # Increased for A100 (40GB VRAM)
+    per_device_eval_batch_size: int = 32  # Increased for A100
     learning_rate: float = 2e-5  # Lower LR for fine-tuning
     max_length: int = 512
     warmup_steps: int = 50
@@ -87,7 +87,7 @@ class PPORewardModelConfig:
 class PPOConfig:
     """PPO Training Configuration"""
     num_ppo_epochs: int = 4
-    per_device_train_batch_size: int = 1  # Reduced from 4 for debugging
+    per_device_train_batch_size: int = 4  # Increased for A100
     per_device_eval_batch_size: int = 8
     gradient_accumulation_steps: int = 4
     learning_rate: float = 1e-5
@@ -115,11 +115,11 @@ class PPOConfig:
 class GRPOConfig:
     """GRPO Training Configuration"""
     num_train_epochs: int = 3
-    per_device_train_batch_size: int = 1  # Reduced from 4 for debugging
+    per_device_train_batch_size: int = 4  # Increased for A100
     per_device_eval_batch_size: int = 8
     gradient_accumulation_steps: int = 4
     learning_rate: float = 5e-5
-    group_size: int = 2  # Reduced from 4 for debugging - number of responses per prompt
+    group_size: int = 4  # Increased for A100 - number of responses per prompt
     max_length: int = 512
     max_prompt_length: int = 256
     kl_coeff: float = 0.05

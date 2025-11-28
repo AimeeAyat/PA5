@@ -243,6 +243,9 @@ class RewardModelTrainer:
             fp16=False,  # Avoid FP16 unscaling issues
             remove_unused_columns=True,
             optim="paged_adamw_32bit",
+            dataloader_num_workers=4,  # Enable multiprocessing for data loading on Colab
+            dataloader_pin_memory=True,  # Faster GPU memory transfer
+            dataloader_drop_last=True,  # Faster training (drop incomplete batches)
         )
 
         self.trainer = Trainer(
