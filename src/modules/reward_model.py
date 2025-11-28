@@ -239,8 +239,8 @@ class RewardModelTrainer:
             load_best_model_at_end=True,
             metric_for_best_model="accuracy",
             greater_is_better=True,
-            bf16=False,  # Not needed without 8-bit quantization
-            fp16=True,  # Use FP16 for speed on RTX 5090
+            bf16=True,  # BF16 for better compatibility (avoids FP16 gradient unscaling)
+            fp16=False,  # Avoid FP16 unscaling issues
             remove_unused_columns=True,
             optim="paged_adamw_32bit",
         )
