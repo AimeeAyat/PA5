@@ -71,8 +71,8 @@ class PPORewardModelConfig:
     model_id: str = "OpenAssistant/reward-model-deberta-v3-large"
     use_pretrained: bool = False  # Train on ORCA preference data by default
     num_train_epochs: int = 2  # 2 epochs for fine-tuning large model
-    per_device_train_batch_size: int = 24  # Increased for A100 (40GB VRAM)
-    per_device_eval_batch_size: int = 32  # Increased for A100
+    per_device_train_batch_size: int = 8  # DeBERTa-large needs smaller batch (memory intensive)
+    per_device_eval_batch_size: int = 16  # Eval batch can be larger
     learning_rate: float = 2e-5  # Lower LR for fine-tuning
     max_length: int = 512
     warmup_steps: int = 50
