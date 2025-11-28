@@ -7,11 +7,11 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 # ============================================================================
-# HARDWARE CONFIGURATION (Colab A100 - 40GB VRAM)
+# HARDWARE CONFIGURATION (Colab A100 - 40GB or 80GB VRAM)
 # ============================================================================
 DEVICE = "cuda"
 DEVICE_MAP = "auto"
-MAX_MEMORY = {0: "30GB"}  # A100 has 40GB, reserve some for OS
+MAX_MEMORY = {0: "30GB"}  # Set to 30GB for A100-40GB, or 60GB for A100-80GB
 TORCH_DTYPE = "bfloat16"  # BF16 for better stability
 LOAD_IN_8BIT = False  # Disabled - A100 has enough VRAM
 LOAD_IN_4BIT = False  # Not needed
@@ -71,8 +71,8 @@ class PPORewardModelConfig:
     model_id: str = "OpenAssistant/reward-model-deberta-v3-large"
     use_pretrained: bool = False  # Train on ORCA preference data by default
     num_train_epochs: int = 2  # 2 epochs for fine-tuning large model
-    per_device_train_batch_size: int = 8  # DeBERTa-large needs smaller batch (memory intensive)
-    per_device_eval_batch_size: int = 16  # Eval batch can be larger
+    per_device_train_batch_size: int = 8  # DeBERTa-large needs smaller batch (memory intensive, ~12-14GB)
+    per_device_eval_batch_size: int = 16  # Eval batch can be larger (use 32 if A100-80GB)
     learning_rate: float = 2e-5  # Lower LR for fine-tuning
     max_length: int = 512
     warmup_steps: int = 50
